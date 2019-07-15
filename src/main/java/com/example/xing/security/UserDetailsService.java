@@ -1,5 +1,6 @@
 package com.example.xing.security;
 
+import com.example.xing.common.constant.RoleKeys;
 import com.example.xing.model.User;
 import com.example.xing.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +41,8 @@ public class UserDetailsService implements org.springframework.security.core.use
         return createUserDetails(user, dbAuths);
     }
 
-    private org.springframework.security.core.userdetails.User createUserDetails(User user, List<GrantedAuthority> dbAuths) {
-        User createUser = new User(user.getUsername(), user.getPassword(), user.getLocked().equals(false),
-                true, true, true, dbAuths);
+    private JwtUser createUserDetails(User user, List<GrantedAuthority> dbAuths) {
+        JwtUser createUser = new JwtUser(user.getUsername(), user.getPassword(), user.getLocked(), dbAuths,user.getLastPasswordResetDate());
         return createUser;
     }
 
@@ -52,8 +52,10 @@ public class UserDetailsService implements org.springframework.security.core.use
      * @return
      */
     protected List<GrantedAuthority> loadUserAuthorities(User user) {
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_");
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        //查询用户拥有的权限列表
+
+        GrantedAuthority authority = new SimpleGrantedAuthority(RoleKeys.ROLE_PREFIX+RoleKeys.ADMIN);
+        List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(authority);
         return authorities;
     }

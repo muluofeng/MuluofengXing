@@ -1,11 +1,11 @@
 package com.example.xing.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 用户角色关联表
@@ -14,10 +14,15 @@ import javax.persistence.Id;
  */
 @Getter
 @Setter
-public class UserRole {
+@NoArgsConstructor
+@Entity
+@Table(name = "auth_user_role")
+public class UserRole implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "user_id")
     private Integer userId;
+    @Column(name = "role_id")
     private Integer roleId;
 }

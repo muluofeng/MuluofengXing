@@ -8,3 +8,27 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/myweb?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=America/New_York
     username: root
     password: root
+  devtools:
+    restart:
+      additional-paths: src/main/java
+
+# Logging configuration
+logging:
+  level:
+    org.springframework:
+      data: DEBUG
+      security: DEBUG
+
+
+      # JWT
+jwt:
+  header: Authorization
+  secret: 0ddf5597e02d981f8803c4cc11f015a4e52679d706edb29b595d9e466def5bcf95273a3053ab5d97ee893c23e4023b912daefaade316406a33b7685d4d223dfa
+  expiration: 604800
+  tokenHead: "Bearer "
+  route:
+    authentication:
+      # 授权
+      path: auth
+      refresh: refresh
+      register: "auth/register"
